@@ -93,11 +93,34 @@ namespace ViccAdatbazis.Controllers
             {
                 _context.Viccek.Remove(torlendoVicc);
             }
-            
+
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
+
+        //Vicc Like
+        [Route("{id}/like")] //api/Vicc/n/like
+        [HttpPatch("{id}")]
+
+        public async Task<ActionResult> Likeolas(int id)
+        {
+            var vicc = _context.Viccek.Find(id);
+
+            if (vicc == null)
+            {
+                return NotFound();
+            }
+
+            vicc.Tetszik++;
+            _context.Entry(vicc).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+
+
+        //Vicc Dislike
 
     }
 
